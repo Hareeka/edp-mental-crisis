@@ -25,3 +25,7 @@ ignore = ["B008", "B905"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
