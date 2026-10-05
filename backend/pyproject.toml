@@ -1,3 +1,19 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "FastAPI backend for edp-mental-crisis"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    # Add any other third-party dependencies your backend imports below:
+    # "pydantic>=2.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.ruff]
 line-length = 160
 target-version = "py310"
