@@ -14,7 +14,7 @@ const AuthContext = createContext<AuthState | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(() => Boolean(getToken()))
 
   const refresh = useCallback(async () => {
     if (!getToken()) {
@@ -32,11 +32,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
-    refresh()
+    if (getToken()) {
+      api.me().then(setUser, () => setUser(null)).finally(() => setLoading(false))
+    }
     const onLogout = () => setUser(null)
     window.addEventListener('mc-logout', onLogout)
     return () => window.removeEventListener('mc-logout', onLogout)
-  }, [refresh])
+  }, [])
 
   const login = async (email: string, password: string) => {
     setToken((await api.login(email, password)).access_token)
